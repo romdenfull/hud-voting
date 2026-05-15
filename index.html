@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUD Vote - Spin&Go</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>🎲 HUD Vote | Spin&Go</h1>
+    <div id="user-panel" class="hidden">
+      <span id="user-info"></span>
+      <button id="logout-btn" class="btn secondary">Выйти</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Форма входа -->
+    <section id="login-section">
+      <h2>Вход для участников</h2>
+      <form id="login-form">
+        <input type="text" id="code-input" placeholder="Введите ваш код доступа" required>
+        <button type="submit" class="btn primary">Войти</button>
+        <p id="login-error" class="error hidden"></p>
+      </form>
+    </section>
+
+    <!-- Опросы -->
+    <section id="polls-section" class="hidden">
+      <h2>Активные голосования</h2>
+      <div id="polls-container" class="grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Проект для сообщества GipsyTeam | Результаты обновляются автоматически</p>
+  </footer>
+
+  <!-- Модули -->
+  <script type="module" src="js/config.js"></script>
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/polls.js"></script>
+  <script type="module" src="js/voting.js"></script>
+</body>
+</html>
