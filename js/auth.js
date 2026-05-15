@@ -1,10 +1,5 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
-import { sha256, showError } from './utils.js';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-export function initAuth() {
+// Авторизация
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('login-form');
   const input = document.getElementById('code-input');
   const errorEl = document.getElementById('login-error');
@@ -27,9 +22,10 @@ export function initAuth() {
 
     try {
       const hash = await sha256(code);
-      const { data, error } = await supabase.rpc('verify_code', { p_code_hash: hash });
+      // Вызов RPC-функции через глобальный клиент
+      const { data, error } = await window.supabaseClient.rpc('verify_code', { p_code_hash: hash });
 
-      if (error || !data.length) throw new Error('Неверный код или доступ отозван');
+      if (error || !data || data.length === 0) throw new Error('Неверный код или доступ отозван');
 
       const user = data[0];
       const sessionData = { codeHash: hash, ...user };
@@ -50,6 +46,7 @@ export function initAuth() {
     pollsSection.classList.remove('hidden');
     userPanel.classList.remove('hidden');
     userInfo.textContent = `👤 ${session.display_name} | Вес голоса: ${session.weight}`;
-    window.dispatchEvent(new Event('auth-ready'));
+    // Загружаем опросы после успешного входа
+    loadPolls();
   }
-}
+});
